@@ -73,51 +73,52 @@ export default function ProductsTable(props) {
                     <div className="my-3">
                         <input type="text" className="form-control" id="search-product-name" placeholder="Wyszukaj produkt" value={searchProduct} onInput={e => setSearchProduct(e.target.value)} autoComplete="off"/>
                     </div>
+                    <div class="table-responsive-md">
+                        <table className="table table-sm shadow-sm">
+                            <thead style={{"backgroundColor": "#1089ff"}}>
+                                <tr>
+                                    <th scope="col" className="text-white py-3 px-3">#</th>
+                                    <th scope="col" className="text-white py-3">Asortyment</th>
+                                    <th scope="col" className="text-white py-3">Szacunkowa ilość</th>
+                                    <th scope="col" className="text-white py-3">Szt/kg</th>
+                                    <th scope="col" className="text-white py-3">Zamówiono</th>
+                                    <th scope="col" className="text-white py-3">Zamówiono ost.</th>
+                                    <th scope="col" className="text-white py-3">Pozostało</th>
+                                    <th scope="col" className="text-white py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {products[0].NAME ?
+                                    products.filter(products => products.NAME.toLowerCase().includes(searchProduct.toLowerCase()) || products.NAME.toUpperCase().includes(searchProduct.toUpperCase()) || products.NAME.includes(searchProduct)).map((products, idx) =>(
+                                        <tr key={products.ID}>
+                                            <td className="px-3">{idx}</td>
+                                            <td>{products.NAME}</td>
+                                            <td>{products.QUANTITY}</td>
+                                            <td>{products.TYPE}</td>
+                                            <td>{products.ORDERED}</td>
+                                            <td>{products.LAST_ORDER}</td>
+                                            <td>{products.PRODUCTS_LEFT}</td>
+                                            <td>
+                                                <div className="d-flex">
+                                                    <a href="#" class="link-secondary"><AiOutlineEdit className="mx-3 fs-5" id={products.ID} onClick={() => handleShowEditModal(products.ID)}/></a> 
+                                                    <a href="#" class="link-danger"><CgClose className="fs-5" id={products.ID} onClick={() => handleShowDeleteModal(products.ID)}/></a> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                : 
+                                <tr>
+                                    <td colSpan="11" className="text-center">Brak danych</td>
+                                </tr> }
 
-                    <table className="table table-sm shadow-sm">
-                        <thead style={{"backgroundColor": "#1089ff"}}>
-                            <tr>
-                                <th scope="col" className="text-white py-3 px-3">#</th>
-                                <th scope="col" className="text-white py-3">Asortyment</th>
-                                <th scope="col" className="text-white py-3 text-break">Szacunkowa ilość</th>
-                                <th scope="col" className="text-white py-3">Szt/kg</th>
-                                <th scope="col" className="text-white py-3">Zamówiono</th>
-                                <th scope="col" className="text-white py-3">Zamówiono ost.</th>
-                                <th scope="col" className="text-white py-3">Pozostało</th>
-                                <th scope="col" className="text-white py-3"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {products[0].NAME ?
-                                products.filter(products => products.NAME.toLowerCase().includes(searchProduct.toLowerCase()) || products.NAME.toUpperCase().includes(searchProduct.toUpperCase()) || products.NAME.includes(searchProduct)).map((products, idx) =>(
-                                    <tr key={products.ID}>
-                                        <td className="px-3">{idx}</td>
-                                        <td>{products.NAME}</td>
-                                        <td>{products.QUANTITY}</td>
-                                        <td>{products.TYPE}</td>
-                                        <td>{products.ORDERED}</td>
-                                        <td>{products.LAST_ORDER}</td>
-                                        <td>{products.PRODUCTS_LEFT}</td>
-                                        <td>
-                                            <div className="d-flex">
-                                                <a href="#" class="link-secondary"><AiOutlineEdit className="mx-3 fs-5" id={products.ID} onClick={() => handleShowEditModal(products.ID)}/></a> 
-                                                <a href="#" class="link-danger"><CgClose className="fs-5" id={products.ID} onClick={() => handleShowDeleteModal(products.ID)}/></a> 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
-                            : 
-                            <tr>
-                                <td colSpan="11" className="text-center">Brak danych</td>
-                            </tr> }
-
-                            <tr>
-                                <td colSpan="11"> 
-                                    <button type="button" className="btn btn-link" onClick={() => handleShowAddModal()}>Dodaj produkt</button>
-                                </td>                          
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <td colSpan="11"> 
+                                        <button type="button" className="btn btn-link" onClick={() => handleShowAddModal()}>Dodaj produkt</button>
+                                    </td>                          
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         }
